@@ -44,8 +44,7 @@ data class AddMealCommand(
   @TargetAggregateIdentifier
   val orderId: OrderId,
   val guestName: String,
-  val meal: Meal,
-  val selfPaying: Boolean = true
+  val meal: Meal
 )
 
 /**
