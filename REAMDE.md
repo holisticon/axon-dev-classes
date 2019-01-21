@@ -74,5 +74,10 @@ Create a constructor annotated by the `@CommandHandler` and use
 Store at least the aggregate identifier in the sourcing event handler
 (an aggregate method marked with `@EventSourcingHandler`).
 
+## Class 4: Projection
+
+Implement a simple view projection (`InMemoryOrderProjection`) in `view` module.
+
+ 
 
 
