@@ -4,6 +4,7 @@ import java.math.BigDecimal
 
 
 inline class OrderId(val value: String)
+
 inline class Currency(val value: String) {
   companion object {
       val EUR: Currency = Currency("EUR")
@@ -12,6 +13,7 @@ inline class Currency(val value: String) {
 
 enum class OrderStatus {
   OPEN,
+  CLOSED,
   PLACED,
   DELIVERED
 }
