@@ -3,7 +3,11 @@ package io.holunda.academy.axon.dailymeal.api
 import java.math.BigDecimal
 
 
-inline class OrderId(val value: String)
+inline class OrderId(val value: String) {
+  companion object {
+    val UNDEF: OrderId = OrderId("")
+  }
+}
 
 inline class Currency(val value: String) {
   companion object {
@@ -18,12 +22,12 @@ enum class OrderStatus {
   DELIVERED
 }
 
+data class Amount(val amount: BigDecimal, val currency: Currency = Currency.EUR)
 
 /**
  * Represents a meal.
  */
 data class Meal(
   val name: String,
-  val price: BigDecimal,
-  val currency: Currency = Currency.EUR
+  val amount: Amount
 )
