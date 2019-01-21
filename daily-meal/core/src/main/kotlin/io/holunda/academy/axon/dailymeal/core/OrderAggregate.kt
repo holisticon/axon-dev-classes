@@ -8,15 +8,21 @@ import org.axonframework.modelling.command.AggregateLifecycle
 import org.axonframework.spring.stereotype.Aggregate
 
 @Aggregate
-class OrderAggregate() {
+class OrderAggregate {
 
   @AggregateIdentifier
-  lateinit var orderId: String
-  lateinit var status: OrderStatus
+  private var orderId: OrderId
+  private var status: OrderStatus
 
-  lateinit var providerName: String
-  lateinit var creatorName: String
-  var meals: MutableMap<String, Meal> = mutableMapOf()
+  private lateinit var providerName: String
+  private lateinit var creatorName: String
+  private var meals: MutableMap<String, Meal> = mutableMapOf()
+  private var payments: MutableMap<String, Amount> = mutableMapOf()
+
+  constructor() {
+    this.orderId = OrderId.UNDEF
+    this.status = OrderStatus.OPEN
+  }
 
   @CommandHandler
   constructor(command: OpenOrderCommand): this() {
@@ -29,14 +35,65 @@ class OrderAggregate() {
     )
   }
 
+  @CommandHandler
+  fun closeOrder(command: CloseOrderCommand) {
+    if (this.status == OrderStatus.OPEN) {
+      AggregateLifecycle.apply(OrderClosedEvent(
+        this.orderId
+      ))
+    }
+  }
+
+  @CommandHandler
+  fun placeOrder(command: CloseOrderCommand) {
+    if (this.status == OrderStatus.CLOSED && orderBalanced()) {
+      AggregateLifecycle.apply(OrderPlacedEvent(
+        orderId = this.orderId,
+        providerName = this.providerName,
+        meals = this.meals.map { entry -> entry.value }.toSet()
+      ))
+    }
+  }
+
+  @CommandHandler
+  fun markOrderDelivered(command: MarkOrderDeliveredCommand) {
+    if (this.status == OrderStatus.PLACED) {
+      AggregateLifecycle.apply(OrderDeliveredEvent(
+        this.orderId
+      ))
+    }
+  }
+
   @EventSourcingHandler
   fun on(event: OrderOpenedEvent) {
-    this.status = OrderStatus.OPEN
-    this.orderId = event.orderId.value
+    this.orderId = event.orderId
     this.providerName = event.providerName
     this.creatorName = event.creatorName
   }
 
+  @EventSourcingHandler
+  fun on(event: OrderClosedEvent) {
+    this.status = OrderStatus.CLOSED
+  }
 
+  @EventSourcingHandler
+  fun on(event: OrderPlacedEvent) {
+    this.status = OrderStatus.PLACED
+  }
+
+  @EventSourcingHandler
+  fun on(event: OrderDeliveredEvent) {
+    this.status = OrderStatus.DELIVERED
+  }
+
+
+  fun orderBalanced(): Boolean {
+    meals.forEach{
+      if (!payments.containsKey(it.key) || payments[it.key] != it.value.amount) {
+        return false
+      }
+    }
+    return true
+  }
 
 }
