@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.holunda.academy</groupId>
+    <artifactId>axon-dev-classes</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>axon-daily-meal</artifactId>
+  <packaging>pom</packaging>
+
+  <modules>
+    <module>api</module>
+    <module>core</module>
+    <module>view</module>
+    <module>app</module>
+  </modules>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.holunda.academy</groupId>
+        <artifactId>axon-daily-meal-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.holunda.academy</groupId>
+        <artifactId>axon-daily-meal-core</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.holunda.academy</groupId>
+        <artifactId>axon-daily-meal-view</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+</project>
