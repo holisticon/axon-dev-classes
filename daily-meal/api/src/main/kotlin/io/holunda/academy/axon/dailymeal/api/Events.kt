@@ -12,6 +12,10 @@ data class OrderOpenedEvent(
   val creatorName: String
 ) : OrderEvent
 
+data class OrderClosedEvent(
+  override val orderId: OrderId
+) : OrderEvent
+
 data class OrderPlacedEvent(
   override val orderId: OrderId,
   val meals: Set<Meal>,

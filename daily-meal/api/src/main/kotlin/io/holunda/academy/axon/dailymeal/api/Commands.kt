@@ -22,6 +22,14 @@ data class PlaceOrderCommand(
 )
 
 /**
+ * Marks order as closed (start collecting money).
+ */
+data class CloseOrderCommand(
+  @TargetAggregateIdentifier
+  val orderId: OrderId
+)
+
+/**
  * Marks the order as delivered.
  */
 data class MarkOrderDeliveredCommand(
