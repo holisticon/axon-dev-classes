@@ -50,12 +50,11 @@ data class AddMealCommand(
 /**
  * Adds a payment to existing order.
  */
-data class AddPaymentCommand(
+data class PayMealCommand(
   @TargetAggregateIdentifier
   val orderId: OrderId,
   val guestName: String,
-  val amount: BigDecimal,
-  val currency: Currency = Currency.EUR
+  val amount: Amount
 )
 
 

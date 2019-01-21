@@ -56,6 +56,5 @@ data class MealAddedEvent(
 data class PaymentAddedEvent(
   override val orderId: OrderId,
   val guestName: String,
-  val amount: BigDecimal,
-  val currency: Currency = Currency.EUR
+  val amount: Amount
 ) : OrderEvent
