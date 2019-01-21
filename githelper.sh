@@ -8,6 +8,7 @@ declare -a BRANCHES=(
     "class/1-api"
     "class/2-core-test"
     "class/3-core-impl"
+    "class/4-projection"
 )
 
 echo "--------------------------------------------------"
