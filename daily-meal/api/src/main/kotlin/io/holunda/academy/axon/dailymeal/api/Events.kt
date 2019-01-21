@@ -1,11 +1,14 @@
 package io.holunda.academy.axon.dailymeal.api
 
 interface OrderEvent {
-  val orderId: String
+  val orderId: OrderId
 }
 
+/**
+ * New order is opened.
+ */
 data class OrderOpenedEvent(
-  override val orderId: String,
+  override val orderId: OrderId,
   val providerName: String,
-  val creator: String
+  val creatorName: String
 ) : OrderEvent

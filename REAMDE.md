@@ -36,26 +36,43 @@ In order to run the project, please enter
 
 # Use case
 
-A new system for handling daily meal ordering in a small company needs to be created. Today, a single person is involved in the ordering process, collects the meal orders from people in the office, collects the money and places the orders (sometimes multiple) by the local meal providers.
-The new system should be able to automate the order creation. Everyone is capable to see orders created today and join to the order by placing the meal wish. Orders are created per meal provider. For a meal added to the order, the user indicates the amount it is willing to pay (including tip). After all meals are added, the order can be closed. The order creator collects all the money for the order and marks the money for meals as collected.
-In the classes, the system without a UI but with a REST interface will be developed. Checkout this repository:
+Today, a single person is involved in the meal ordering process, collects the meal orders 
+from people in the office, collects the money and places the orders (sometimes multiple) 
+by the local meal providers. The new system should be able to automate the order creation. 
+Everyone is capable to see orders created today and join to the order by placing the meal wish. 
+Orders are created per meal provider. After all meals are added, the order can be closed. 
+The order creator collects all the money for the order and places the order by the provider.
 
- https://github.com/holisticon/axon-dev-classes
+In the classes, the system without a UI but with a REST interface will be developed. 
 
 # Lab Classes 
 
 ## Class 1: Core API design
 
-### Task 1
+Identify the public API of the system. Start with commands and queries. 
+What events should be emitted? Create data classes for commands, 
+queries and events in `daily-meal-api` module.
 
-Identify the public API of the system. Start with commands and queries. What events should be emmitted?
+## Class 2: Test it
 
-### Task 2
+Implement an aggregate test in `core` module, which tests the `OrderAggregate`. 
+Use `FixtureConfiguration<OrderAggregate>` to initialize the test with
+`AggregateTestFixture(OrderAggregate::class)` as value.
 
-Create data classes for commands, queries and events in `daily-meal-api` module.
+Write the specification how the aggregate should behave if `OpenOrderCommand` 
+is received. The test should remain failing at the end of the task.
+
+## Class 3: Aggregate design
+
+Implement the `OrderAggregate` in `core` module which is created 
+on `OpenOrderCommand`. Use an aggregate member `orderId` of type 
+`OrderId` to identify the aggregate (mark it with `@AggregateIdentifier`). 
+
+Create a constructor annotated by the `@CommandHandler` and use 
+`AggregateLifecycle.apply()` to emit events.
+
+Store at least the aggregate identifier in the sourcing event handler
+(an aggregate method marked with `@EventSourcingHandler`).
 
 
-## Class 2: Aggregate design
-
-Create `OrderAgggregate` which should react on `OpenOrderCommand`.
 
