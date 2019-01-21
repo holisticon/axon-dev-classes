@@ -3,6 +3,7 @@ package io.holunda.academy.axon.dailymeal.core
 import io.holunda.academy.axon.dailymeal.api.OpenOrderCommand
 import io.holunda.academy.axon.dailymeal.api.OrderId
 import io.holunda.academy.axon.dailymeal.api.OrderOpenedEvent
+import org.axonframework.test.AxonAssertionError
 import org.axonframework.test.aggregate.AggregateTestFixture
 import org.axonframework.test.aggregate.FixtureConfiguration
 import org.axonframework.test.aggregate.TestExecutor
@@ -18,7 +19,7 @@ class OrderAggregateTest {
     fixture = AggregateTestFixture(OrderAggregate::class.java)
   }
 
-  @Test
+  @Test(expected = AxonAssertionError::class)
   fun `should create order`() {
     fixture
       .givenNoPriorActivity()
@@ -31,4 +32,5 @@ class OrderAggregateTest {
 
 
 fun <T> TestExecutor<T>.whenever(command: Any) = this.`when`(command)
-fun <T> TestExecutor<T>.whenever(command: Any, metaData: Map<String, Any> ) = this.`when`(command, metaData)
+fun <T> TestExecutor<T>.whenever(command: Any, metaData: Map<String, Any>) = this.`when`(command, metaData)
+
