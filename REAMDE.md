@@ -11,8 +11,11 @@ Every task covered in the workshop is supported by a lab class. The `class/branc
 The following branches exist:
 
     master
-    class/1-core-api
-
+    class/1-api
+    class/2-core-test
+    class/3-core-impl
+    class/4-projection
+    
 Please change the branches using:
 
     git stash
@@ -74,5 +77,10 @@ Create a constructor annotated by the `@CommandHandler` and use
 Store at least the aggregate identifier in the sourcing event handler
 (an aggregate method marked with `@EventSourcingHandler`).
 
+## Class 4: Projection
+
+Implement a simple view projection (`InMemoryOrderProjection`) in `view` module.
+
+ 
 
 
